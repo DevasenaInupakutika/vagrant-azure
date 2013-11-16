@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/10thmagnitude/vagrant-azure.png)](http://travis-ci.org/10thmagnitude/vagrant-azure)
+
 # Vagrant::Azure
 
 TODO: Write a gem description
