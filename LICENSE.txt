@@ -1,4 +1,4 @@
-Copyright (c) 2013 Matt Stratton
+Copyright (c) 2013 10th Magnitude
 
 MIT License
 
