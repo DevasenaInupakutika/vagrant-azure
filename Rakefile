@@ -1,17 +1,21 @@
-require 'rake'
-require "rubygems"
-require "bundler/gem_tasks"
-#Bundler.setup(:default, :test)
+require 'rubygems'
+require 'bundler/setup'
+require 'rspec/core/rake_task'
 
-task :spec do
-  begin
-    require 'rspec/core/rake_task'
+# Immediately sync all stdout so that tools like buildbot can
+# immediately load in the output.
+$stdout.sync = true
+$stderr.sync = true
 
-#   desc "Run the specs under spec/"
-#    RSpec::Core::RakeTask.new do |t|
-#     t.spec_files = FileList['spec/**/*_spec.rb']
-#    end
-#  rescue NameError, LoadError => e
-#    puts e
-  end
-end
+# Change to the directory of this file.
+Dir.chdir(File.expand_path("../", __FILE__))
+
+# This installs the tasks that help with gem creation and
+# publishing.
+Bundler::GemHelper.install_tasks
+
+# Install the `spec` task so that we can run tests.
+RSpec::Core::RakeTask.new
+
+# Default task is to run the unit tests
+task :default => "spec"
