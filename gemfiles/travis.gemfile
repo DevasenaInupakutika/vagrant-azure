@@ -3,5 +3,5 @@ group :test do
   gem 'rake'
   gem 'rspec'
   gem "vagrant", :git => "git://github.com/mitchellh/vagrant.git", :tag => "v1.2.7"
-  
+  #gem "codeclimate-test-reporter", group: :test, require: nil
 end
