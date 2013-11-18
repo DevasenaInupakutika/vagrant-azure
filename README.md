@@ -1,4 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/10thmagnitude/vagrant-azure.png)](http://travis-ci.org/10thmagnitude/vagrant-azure) [![Code Climate](https://codeclimate.com/repos/528a8e3ff3ea0041270b7cee/badges/4e4e11d58022df01ca23/gpa.png)](https://codeclimate.com/repos/528a8e3ff3ea0041270b7cee/feed)
+[![Coverage Status](https://coveralls.io/repos/10thmagnitude/vagrant-azure/badge.png)](https://coveralls.io/r/10thmagnitude/vagrant-azure)
 
 # Vagrant::Azure
 
