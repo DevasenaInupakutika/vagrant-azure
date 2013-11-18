@@ -1,23 +1,23 @@
 $:.unshift File.expand_path("../lib", __FILE__)
-require 'vagrant/azure/version'
+require 'vagrant-azure/version'
 
-Gem::Specification.new do |spec|
-  spec.name          = "vagrant-azure"
-  spec.version       = Vagrant::Azure::VERSION
+Gem::Specification.new do |s|
+  s.name          = "vagrant-azure"
+  s.version       = VagrantPlugins::Azure::VERSION
   s.platform         = Gem::Platform::RUBY
-  spec.authors       = ["Matt Stratton"]
-  spec.email         = ["matt.stratton@gmail.com"]
-  spec.description   = "Enables Vagrant to manage machines in Windows Azure."
-  spec.summary       = "Enables Vagrant to manage machines in Windows Azure."
-  spec.homepage      = "http://10thmagnitude.github.io/vagrant-azure"
-  spec.license       = "MIT"
+  s.authors       = ["Matt Stratton"]
+  s.email         = ["matt.stratton@gmail.com"]
+  s.description   = "Enables Vagrant to manage machines in Windows Azure."
+  s.summary       = "Enables Vagrant to manage machines in Windows Azure."
+  s.homepage      = "http://10thmagnitude.github.io/vagrant-azure"
+  s.license       = "MIT"
   
   s.required_rubygems_version = ">= 1.3.6"
   s.rubyforge_project         = "vagrant-azure"
   
   s.add_runtime_dependency "fog", "~> 1.15.0"
 
-  spec.add_development_dependency "rake"
+  s.add_development_dependency "rake"
   s.add_development_dependency "rspec-core", "~> 2.12.2"
   s.add_development_dependency "rspec-expectations", "~> 2.12.1"
   s.add_development_dependency "rspec-mocks", "~> 2.12.1"

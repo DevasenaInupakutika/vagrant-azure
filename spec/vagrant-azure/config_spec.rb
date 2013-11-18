@@ -1,6 +1,6 @@
-require "vagrant-aws/config"
+require "vagrant-azure/config"
 
-describe VagrantPlugins::AZURE::Config do
+describe VagrantPlugins::Azure::Config do
   let(:instance) { described_class.new }
   
 end
