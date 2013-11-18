@@ -31,46 +31,152 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><a href="http://travis-ci.org/10thmagnitude/vagrant-azure"><img src="https://secure.travis-ci.org/10thmagnitude/vagrant-azure.png" alt="Build Status"></a></p>
+        <h1>
+<a name="vagrant-windows-azure-provider" class="anchor" href="#vagrant-windows-azure-provider"><span class="octicon octicon-link"></span></a>Vagrant Windows Azure Provider</h1>
 
-<h1>
-<a name="vagrantazure" class="anchor" href="#vagrantazure"><span class="octicon octicon-link"></span></a>Vagrant::Azure</h1>
+<p>
+<a href="http://travis-ci.org/10thmagnitude/vagrant-azure"><img src="https://secure.travis-ci.org/10thmagnitude/vagrant-azure.png" alt="Build Status"></a> <a href="https://codeclimate.com/repos/528a8e3ff3ea0041270b7cee/feed"><img src="https://codeclimate.com/repos/528a8e3ff3ea0041270b7cee/badges/4e4e11d58022df01ca23/gpa.png" alt="Code Climate"></a>
+<a href="https://coveralls.io/r/10thmagnitude/vagrant-azure"><img src="https://coveralls.io/repos/10thmagnitude/vagrant-azure/badge.png" alt="Coverage Status"></a>
+</p>
 
-<p>TODO: Write a gem description</p>
+<p>This is a <a href="http://www.vagrantup.com">Vagrant</a> 1.2+ plugin that adds a <a href="http://www.windowsazure.com/">Windows Azure</a>
+provider to Vagrant, allowing Vagrant to control and provision machines in
+Windows Azure.</p>
 
-<h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
-
-<p>Add this line to your application's Gemfile:</p>
-
-<pre><code>gem 'vagrant-azure'
-</code></pre>
-
-<p>And then execute:</p>
-
-<pre><code>$ bundle
-</code></pre>
-
-<p>Or install it yourself as:</p>
-
-<pre><code>$ gem install vagrant-azure
-</code></pre>
+<p><strong>NOTE:</strong> This plugin requires Vagrant 1.2+,</p>
 
 <h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>Boot up virtual machines in Azure (TODO)</li>
+<li>SSH or WinRM into the instances (TODO)</li>
+<li>Provision the instances with the built-in providers (shell, Puppet, Chef) (TODO)</li>
+</ul><h2>
 <a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p>TODO: Write usage instructions here</p>
+<p>Install using standard Vagrant 1.1+ plugin installation methods. After
+installing, <code>vagrant up</code> and specify the <code>azure</code> provider. An example is
+shown below.</p>
+
+<pre><code>$ vagrant plugin install vagrant-azure
+...
+$ vagrant up --provider=azure
+...
+</code></pre>
+
+<p>This assumes you have an Azure-compatible box file for use with Vagrant.</p>
+
+<h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<p>After installing the plugin (instructions above), the quickest way to get
+started is to actually use a dummy AWS box and specify all the details
+manually within a <code>config.vm.provider</code> block. So first, add the dummy
+box using any name you want:</p>
+
+<pre><code>$ vagrant box add dummy URL REDACTED
+...
+</code></pre>
+
+<p>And then make a Vagrantfile that looks like the following, filling in
+your information where necessary.</p>
+
+<pre><code>Vagrant.configure("2") do |config|
+  config.vm.box = "dummy"
+
+  config.vm.provider :azure do |azure, override|
+    azure.publish_settings_file= "PATH TO YOUR PUBLISH SETTINGS"
+    azure.subscription_id = "YOUR SUBSCRIPTION ID"
+    azure.source_vhd = "chef-tpl-2k8r2"
+
+  end
+end
+</code></pre>
+
+<p>And then run <code>vagrant up --provider=azure</code>.</p>
+
+<p>This will start an Ubuntu 12.04 instance in the REDACTED region within
+your account. And assuming your SSH/WinRM information was filled in properly
+within your Vagrantfile, SSH/WinRM and provisioning will work as well.</p>
+
+<h2>
+<a name="box-format" class="anchor" href="#box-format"><span class="octicon octicon-link"></span></a>Box Format</h2>
+
+<p>Every provider in Vagrant must introduce a custom box format. This
+provider introduces <code>azure</code> boxes. You can view an example box in
+the <a href="https://github.com/mitchellh/vagrant-aws/tree/master/example_box">example_box/ directory</a>.
+That directory also contains instructions on how to build a box.</p>
+
+<p>The box format is basically just the required <code>metadata.json</code> file
+along with a <code>Vagrantfile</code> that does default settings for the
+provider-specific configuration for this provider.</p>
+
+<h2>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>This provider exposes quite a few provider-specific configuration options:</p>
+
+<p>(more to come)</p>
+
+<ul>
+<li>
+<code>publish_settings_file</code> - Path to the publish settings to use</li>
+<li>
+<code>subscription_id</code> - Which subscription to use in the account</li>
+<li>
+<code>source_vhd</code> - The name of the image to start with</li>
+</ul><p>These can be set like typical provider-specific configuration:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="c1"># ... other stuff</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="ss">:azure</span> <span class="k">do</span> <span class="o">|</span><span class="n">azure</span><span class="o">|</span>
+    <span class="n">azure</span><span class="o">.</span><span class="n">publish_settings_file</span> <span class="o">=</span> <span class="s2">"c:\users\mstratton\mstratton.publishsettingsfile"</span>
+    <span class="n">azure</span><span class="o">.</span><span class="n">ssubscription_id</span> <span class="o">=</span> <span class="s2">"cc0e62b9-6a31-XXXX-a580-907c8297557b"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="networks" class="anchor" href="#networks"><span class="octicon octicon-link"></span></a>Networks</h2>
+
+<p>Networking features in the form of <code>config.vm.network</code> are not
+supported with <code>vagrant-azure</code>, currently. If any of these are
+specified, Vagrant will emit a warning, but will otherwise boot
+the Windows Azure machine.</p>
+
+<h2>
+<a name="synced-folders" class="anchor" href="#synced-folders"><span class="octicon octicon-link"></span></a>Synced Folders</h2>
+
+<p>There is currently no support for synced folders. TODO!</p>
 
 <h2>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
-<ol>
-<li>Fork it</li>
-<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
-<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
-<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
-<li>Create new Pull Request</li>
-</ol>
+<p>To work on the <code>vagrant-azure</code> plugin, clone this repository out, and use
+<a href="http://gembundler.com">Bundler</a> to get the dependencies:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Once you have the dependencies, verify the unit tests pass with <code>rake</code>:</p>
+
+<pre><code>$ bundle exec rake
+</code></pre>
+
+<p>If those pass, you're ready to start developing the plugin. You can test
+the plugin without installing it into your Vagrant environment by just
+creating a <code>Vagrantfile</code> in the top level of this directory (it is gitignored)
+and add the following line to your <code>Vagrantfile</code> </p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Vagrant</span><span class="o">.</span><span class="n">require_plugin</span> <span class="s2">"vagrant-aws"</span>
+</pre></div>
+
+<p>Use bundler to execute Vagrant:</p>
+
+<pre><code>$ bundle exec vagrant up --provider=aws
+</code></pre>
       </section>
     </div>
 
